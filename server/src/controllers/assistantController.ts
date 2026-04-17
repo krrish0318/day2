@@ -1,18 +1,20 @@
 import { Request, Response } from 'express';
 // We'll use mock responses if API keys are missing to ensure testing works without secrets
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { validationResult } from 'express-validator';
 
 const API_KEY = process.env.GEMINI_API_KEY || 'mock_key';
 const genAI = new GoogleGenerativeAI(API_KEY);
 
 export const handleAssistantQuery = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { query, context } = req.body;
-    
-    if (!query) {
-      res.status(400).json({ error: 'Query is required' });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ error: 'Query is missing or invalid', details: errors.array() });
       return;
     }
+
+    const { query, context } = req.body;
 
     // In a pure environment without an API key, fallback to mock responses
     if (API_KEY === 'mock_key') {

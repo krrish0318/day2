@@ -1,4 +1,7 @@
 import { Request, Response } from 'express';
+import NodeCache from 'node-cache';
+
+const cache = new NodeCache({ stdTTL: 5 }); // 5 seconds cache
 
 interface QueueNode {
   id: string;
@@ -11,6 +14,11 @@ interface QueueNode {
 
 export const getQueuePredictions = async (req: Request, res: Response): Promise<void> => {
   try {
+    const cachedData = cache.get('queues');
+    if (cachedData) {
+      res.json({ queues: cachedData });
+      return;
+    }
     // In a real application, this might come from IoT sensors, 
     // camera density models, or a database evaluating historical/live data.
     // For this demonstration, we use heuristic-based mocked predictions.
@@ -36,6 +44,7 @@ export const getQueuePredictions = async (req: Request, res: Response): Promise<
       });
     }
 
+    cache.set('queues', queues);
     res.json({ queues });
   } catch (error) {
     console.error('Queue Prediction Error:', error);

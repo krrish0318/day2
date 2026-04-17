@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
 import { Activity, Clock } from 'lucide-react';
 
 interface QueueNode {
@@ -9,7 +9,7 @@ interface QueueNode {
   density: 'Low' | 'Medium' | 'High';
 }
 
-export default function QueuePredictions() {
+const QueuePredictions = memo(function QueuePredictions() {
   const [queues, setQueues] = useState<QueueNode[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -64,4 +64,6 @@ export default function QueuePredictions() {
       })}
     </div>
   );
-}
+});
+
+export default QueuePredictions;

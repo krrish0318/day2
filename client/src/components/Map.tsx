@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, memo } from 'react';
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 
 const containerStyle = {
@@ -14,7 +14,7 @@ const center = {
 };
 
 // Mock map heatmap/markers logic
-export default function MapView() {
+const MapView = memo(function MapView() {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     // Fallback if not configured properly, just ensuring type safety
@@ -52,4 +52,6 @@ export default function MapView() {
         <Marker position={{ lat: 37.7758, lng: -122.4180 }} label="Food A" />
       </GoogleMap>
   ) : <div className="animate-pulse w-full h-full bg-surface rounded-lg flex items-center justify-center text-gray-500">Loading Map...</div>;
-}
+});
+
+export default MapView;

@@ -11,7 +11,17 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(helmet({
-  contentSecurityPolicy: false,
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://maps.googleapis.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:", "https://maps.gstatic.com", "https://maps.googleapis.com"],
+      connectSrc: ["'self'", "https://maps.googleapis.com"],
+      frameSrc: ["'self'"]
+    }
+  },
   crossOriginEmbedderPolicy: false,
 }));
 app.use(cors());
