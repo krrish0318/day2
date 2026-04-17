@@ -12,6 +12,14 @@ interface QueueNode {
   coordinates: { lat: number, lng: number };
 }
 
+/**
+ * Derives and predicts real-time queue times using latency-based heuristics and timestamps.
+ * Utilizes generic node-caching mechanism to stabilize overhead load on database structures.
+ * 
+ * @param {Request} req Initial request
+ * @param {Response} res Endpoint response
+ * @returns {Promise<void>} List of parsed queues
+ */
 export const getQueuePredictions = async (req: Request, res: Response): Promise<void> => {
   try {
     const cachedData = cache.get('queues');

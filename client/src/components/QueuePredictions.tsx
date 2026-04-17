@@ -9,7 +9,13 @@ interface QueueNode {
   density: 'Low' | 'Medium' | 'High';
 }
 
-const QueuePredictions = memo(function QueuePredictions() {
+/**
+ * QueuePredictions Component - Polls and displays wait-time metrics.
+ * Wrapped in React memo to avoid useless re-renders since payload updates sparingly.
+ * 
+ * @returns {JSX.Element} Wait-time feed list.
+ */
+const QueuePredictions = memo(function QueuePredictions(): JSX.Element {
   const [queues, setQueues] = useState<QueueNode[]>([]);
   const [loading, setLoading] = useState(true);
 

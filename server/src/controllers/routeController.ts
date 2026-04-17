@@ -8,6 +8,13 @@ interface RouteNode {
   isCrowded: boolean;
 }
 
+/**
+ * Processes simulated pathfinding equations to evaluate optimal routes taking crowd patterns into focus.
+ * 
+ * @param {Request} req Endpoint request evaluating origin & destination
+ * @param {Response} res Outputs the evaluated mathematical structure paths
+ * @returns {Promise<void>} Express execution completion
+ */
 export const getOptimizedRoute = async (req: Request, res: Response): Promise<void> => {
   try {
     const errors = validationResult(req);

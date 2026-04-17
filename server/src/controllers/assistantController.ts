@@ -6,6 +6,14 @@ import { validationResult } from 'express-validator';
 const API_KEY = process.env.GEMINI_API_KEY || 'mock_key';
 const genAI = new GoogleGenerativeAI(API_KEY);
 
+/**
+ * Handles Artificial Intelligence contextual queries using Google Generative AI (Gemini).
+ * Evaluates context around queues and maps to supply physical navigation.
+ * 
+ * @param {Request} req Express Request
+ * @param {Response} res Express Response
+ * @returns {Promise<void>} JSON structure encapsulating the text reply
+ */
 export const handleAssistantQuery = async (req: Request, res: Response): Promise<void> => {
   try {
     const errors = validationResult(req);

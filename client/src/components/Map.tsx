@@ -13,8 +13,14 @@ const center = {
   lng: -122.4194
 };
 
-// Mock map heatmap/markers logic
-const MapView = memo(function MapView() {
+/**
+ * MapView Component
+ * Renders the Google Map utilizing the internal JS API array.
+ * Highly optimized with memo to prevent API reloading on typical dashboard tab shifts.
+ * 
+ * @returns {JSX.Element} Map visualizer.
+ */
+const MapView = memo(function MapView(): JSX.Element {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     // Fallback if not configured properly, just ensuring type safety

@@ -1,8 +1,23 @@
-
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
+import { requestNotificationPermission } from './services/notificationService';
+import { auth } from './services/firebase';
+import { onAuthStateChanged, User } from 'firebase/auth';
 
-function App() {
+export default function App(): JSX.Element {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    // Auth Listener
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      if (currentUser) {
+        requestNotificationPermission();
+      }
+    });
+    return () => unsubscribe();
+  }, []);
   return (
     <Router>
       <div className="min-h-screen flex flex-col bg-background">
@@ -14,7 +29,7 @@ function App() {
             <Link to="/" className="hover:text-primary transition-colors focus:ring-2 focus:ring-primary outline-none rounded px-2 py-1">Dashboard</Link>
           </nav>
         </header>
-        <main className="flex-1 p-6 max-w-7xl w-full mx-auto">
+        <main className="flex-1 p-6 max-w-7xl w-full mx-auto" role="main" aria-label="Main Application Area">
           <Routes>
             <Route path="/" element={<Dashboard />} />
           </Routes>
@@ -23,5 +38,3 @@ function App() {
     </Router>
   );
 }
-
-export default App;

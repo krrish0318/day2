@@ -2,6 +2,14 @@ import { Request, Response } from 'express';
 import { syncEventToCalendar } from '../services/calendarService';
 import { validationResult } from 'express-validator';
 
+/**
+ * Triggers Google Calendar synchronization for upcoming match fixtures or ticketing entries.
+ * Evaluates sanitization inputs through express-validator middleware.
+ * 
+ * @param {Request} req Express incoming request mapped with body items
+ * @param {Response} res Express output object
+ * @returns {Promise<void>} Synchronization status
+ */
 export const handleCalendarSync = async (req: Request, res: Response): Promise<void> => {
   try {
     const errors = validationResult(req);

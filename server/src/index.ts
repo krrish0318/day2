@@ -50,11 +50,11 @@ app.get('*', (req: Request, res: Response, next: NextFunction) => {
 });
 
 // Error handling middleware
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+app.use((err: Error, req: Request, res: Response, next: NextFunction): void => {
   console.error(err.stack);
   res.status(500).json({ error: 'Internal Server Error' });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, (): void => {
   console.log(`Server listening on port ${PORT}`);
 });

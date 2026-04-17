@@ -7,7 +7,13 @@ interface Message {
   text: string;
 }
 
-export default function ChatAssistant() {
+/**
+ * ChatAssistant Component - Manages AI queries, micro-animations, and AI text integration.
+ * Incorporates aria-labels for usability and manages state locally for chat threads.
+ * 
+ * @returns {JSX.Element} Interactive chat interface.
+ */
+export default function ChatAssistant(): JSX.Element {
   const [messages, setMessages] = useState<Message[]>([
     { id: '1', sender: 'bot', text: 'Hi there! I am your Smart Venue Assistant. Need help finding the shortest queue or the best route to your seat?' }
   ]);
